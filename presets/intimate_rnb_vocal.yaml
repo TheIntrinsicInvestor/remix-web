@@ -1,0 +1,31 @@
+name: intimate_rnb_vocal
+target_stem: vocals
+description: >
+  Warm, close-mic R&B vocal — HPF to clear mud, presence boost, top-end
+  tuck, fast compression for ~6 dB GR, light plate reverb, subtle 1/8-note delay.
+chain:
+  - op: eq
+    params:
+      hpf: 100
+      bands:
+        - [250, 2.0, 1.0]    # low-mid warmth
+        - [7000, -3.0, 1.0]  # tuck harsh highs
+  - op: compress
+    params:
+      threshold_db: -18
+      ratio: 4.0
+      attack_ms: 5.0
+      release_ms: 80.0
+  - op: reverb
+    params:
+      room_size: 0.4
+      wet_level: 0.15
+      dry_level: 0.85
+      damping: 0.6
+  - op: delay
+    params:
+      seconds: 0.125   # 1/8-note at 120 BPM
+      feedback: 0.2
+      mix: 0.05
+# TODO: retune/auto-tune — no free pedalboard plugin available.
+#       Apply pitch correction in Cakewalk or host a free VST3.

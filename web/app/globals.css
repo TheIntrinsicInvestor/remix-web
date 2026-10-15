@@ -1,0 +1,62 @@
+/* Remix design tokens.
+   Cold Luxury, achromatic. The accent is mercury; there is no chromatic accent
+   anywhere on either route. --bg is sampled from the clip's own corners so the
+   scrub canvas has no seam against the page. */
+
+:root {
+  --bg: #0b0f10;          /* measured from the clip: rgb(11,15,16) */
+  --bg-elev: #12181a;
+  --bg-sunk: #070a0b;
+
+  --smoke: #3a3d42;
+  --steel: #7c838c;
+  --mercury: #c9cfd6;     /* the single accent */
+  --highlight: #f2f4f7;
+
+  --text: #f2f4f7;
+  --text-muted: #7c838c;
+  --line: #23292c;
+
+  --radius: 4px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* overflow-x: clip on both, or translated headings push the mobile edge out */
+html {
+  overflow-x: clip;
+  scroll-behavior: auto;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: clip;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-satoshi), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--mercury);
+  outline-offset: 3px;
+}

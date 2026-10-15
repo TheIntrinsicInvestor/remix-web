@@ -1,0 +1,15 @@
+stems_cache/
+input/
+output/
+web/node_modules/
+web/.next/
+remixweb-data/
+__pycache__/
+*.wav
+*.pyc
+.playwright-mcp/
+.remixweb.env
+.env
+.env.*
+!.env.example
+cookies.txt

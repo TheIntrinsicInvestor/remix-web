@@ -1,0 +1,148 @@
+/* The player is an object, not floating copy: it needs a surface of its own or
+   the frame behind it reads straight through the rows. */
+.player {
+  background: rgba(7, 10, 11, 0.82);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.playBtn {
+  border: 1px solid var(--mercury);
+  background: var(--mercury);
+  color: var(--bg-sunk);          /* dark text on a light fill: WCAG AA comfortably */
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: 999px;           /* pill is reserved for the primary action */
+  cursor: pointer;
+  min-width: 6.5rem;
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+
+.playBtn:hover { transform: translateY(-1px); }
+.playBtn:active { transform: translateY(0) scale(0.98); }
+.playBtn:disabled { opacity: 0.5; cursor: default; }
+
+.track {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: 100%;
+  background: var(--mercury);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.source {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.error {
+  font-size: 0.85rem;
+  color: var(--mercury);
+  margin-bottom: 1rem;
+}
+
+.stems {
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.stemRow {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+}
+
+.stemBtn {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 5.5rem 1fr 3.5rem;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.9rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.12s var(--ease);
+}
+
+.stemBtn:hover { border-color: var(--smoke); background: var(--bg-elev); }
+.stemBtn:active { transform: scale(0.995); }
+
+.stemLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+/* Luminance, never hue, distinguishes the stems. */
+.stemBar {
+  width: 72px;
+  justify-self: start;
+  height: 3px;
+  border-radius: 2px;
+  transition: opacity 0.25s var(--ease);
+}
+.stemBar[data-rank="0"] { background: var(--highlight); }
+.stemBar[data-rank="1"] { background: var(--mercury); }
+.stemBar[data-rank="2"] { background: var(--steel); }
+.stemBar[data-rank="3"] { background: var(--smoke); }
+
+.stemState {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.stemMuted { opacity: 0.45; }
+.stemMuted .stemBar { opacity: 0.25; }
+
+.soloBtn {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  padding: 0 0.8rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.soloBtn:hover { color: var(--text); border-color: var(--smoke); }
+.soloBtn:active { transform: scale(0.97); }
+
+.note {
+  margin-top: 1.1rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 60ch;
+}
+
+@media (max-width: 768px) {
+  .transport { flex-wrap: wrap; gap: 0.75rem; }
+  .source { width: 100%; order: 3; }
+  .stemBtn { grid-template-columns: 4.5rem 1fr 2.8rem; gap: 0.6rem; }
+}

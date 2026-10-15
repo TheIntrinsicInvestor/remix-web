@@ -1,0 +1,352 @@
+/* The console. Inherits the showcase's palette and type, plus one-time entrances
+   and press feedback. Nothing scroll-driven, no perpetual loops, nothing between
+   the user and paste -> run -> download. The showcase is loud, the tool is quiet. */
+
+.page {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(2rem, 6vh, 4rem) 1.25rem 5rem;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.unit {
+  width: 100%;
+  max-width: 620px;
+  animation: rise 0.5s var(--ease) both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+}
+
+.wordmark {
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.eject {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease);
+}
+
+.eject:hover { color: var(--text); }
+
+.body { display: flex; flex-direction: column; gap: 2rem; }
+
+.section { display: flex; flex-direction: column; gap: 0.85rem; }
+
+.sectionHead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+
+.sectionLabel {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sectionHint { font-size: 0.75rem; color: var(--smoke); }
+
+/* ---------- Fields ---------- */
+.field { display: grid; gap: 0.4rem; }
+
+.label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.input {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  transition: border-color 0.2s var(--ease);
+  width: 100%;
+}
+
+.input::placeholder { color: var(--smoke); }
+.input:hover { border-color: var(--smoke); }
+.input:focus { border-color: var(--mercury); outline: none; }
+
+.orRule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--smoke);
+  text-align: center;
+}
+
+.orRule::before, .orRule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.dropZone {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.dropZone:hover { border-color: var(--smoke); color: var(--text); }
+.dropActive { border-color: var(--mercury); background: var(--bg-elev); color: var(--text); }
+
+.resolving { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ---------- Source match ---------- */
+.metaCard {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.7rem;
+  animation: rise 0.35s var(--ease) both;
+}
+
+.metaThumb { width: 56px; height: 42px; object-fit: cover; border-radius: 2px; flex-shrink: 0; }
+.metaText { flex: 1; min-width: 0; }
+.metaTitle { font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.metaSub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+.metaBadge {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--bg-sunk);
+  background: var(--mercury);
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ---------- Channels ---------- */
+.channels { display: grid; gap: 0.4rem; }
+
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.8rem 0.9rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.12s var(--ease);
+}
+
+.channel:hover { border-color: var(--smoke); background: var(--bg-elev); }
+.channel:active { transform: scale(0.995); }
+.channelOn { border-color: var(--mercury); background: var(--bg-elev); }
+
+.channelText { flex: 1; display: flex; flex-direction: column; gap: 0.15rem; }
+.channelName { font-size: 0.9rem; font-weight: 500; }
+.channelHint { font-size: 0.72rem; color: var(--text-muted); }
+
+/* luminance, never hue */
+.channelBar { width: 46px; height: 3px; border-radius: 2px; opacity: 0.3; transition: opacity 0.2s var(--ease); }
+.channelBar[data-rank="0"] { background: var(--highlight); }
+.channelBar[data-rank="1"] { background: var(--mercury); }
+.channelBar[data-rank="2"] { background: var(--steel); }
+.channelBar[data-rank="3"] { background: var(--smoke); }
+.channelOn .channelBar { opacity: 1; }
+
+/* ---------- Pitch ---------- */
+.pitchTop { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+.switch { display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+
+.switchTrack {
+  width: 38px;
+  height: 21px;
+  border-radius: 999px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  padding: 2px;
+  display: flex;
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.switchKnob {
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  background: var(--steel);
+  /* toggle physics: a spring-ish overshoot on the knob only */
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s var(--ease);
+}
+
+.switchOn { background: var(--mercury); border-color: var(--mercury); }
+.switchOn .switchKnob { transform: translateX(17px); background: var(--bg-sunk); }
+.switchLabel { font-size: 0.85rem; }
+
+.stepper { display: inline-flex; align-items: center; gap: 0.5rem; animation: rise 0.3s var(--ease) both; }
+
+.stepBtn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), transform 0.1s var(--ease);
+}
+
+.stepBtn:hover:not(:disabled) { border-color: var(--mercury); }
+.stepBtn:active:not(:disabled) { transform: scale(0.92); }
+.stepBtn:disabled { opacity: 0.3; cursor: default; }
+
+.semiReadout {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  min-width: 9.5ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Run ---------- */
+.runWrap { display: flex; }
+
+.runBtn {
+  flex: 1;
+  border: 1px solid var(--mercury);
+  background: var(--mercury);
+  color: var(--bg-sunk);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.9rem 2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+
+.runBtn:hover:not(:disabled) { transform: translateY(-1px); }
+.runBtn:active:not(:disabled) { transform: translateY(0) scale(0.99); }
+.runBtn:disabled { opacity: 0.35; cursor: default; }
+
+/* ---------- Status ---------- */
+.status { display: flex; flex-direction: column; gap: 0.6rem; animation: rise 0.35s var(--ease) both; }
+.statusHead { display: flex; align-items: center; gap: 0.5rem; }
+.statusStage { font-size: 0.85rem; }
+
+.spinner {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  border: 1.5px solid var(--line);
+  border-top-color: var(--mercury);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.statusElapsed {
+  margin-left: auto;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.steps { display: flex; flex-direction: column; gap: 0.3rem; list-style: none; margin: 0; padding: 0; }
+
+.step {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  transition: color 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.stepMark { width: 0.7rem; flex: none; text-align: center; }
+
+.done { color: var(--text-muted); }
+.active { color: var(--mercury); }
+.pending { color: var(--text-muted); opacity: 0.45; }
+
+.statusNote { font-size: 0.72rem; color: var(--text-muted); }
+
+.error {
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--mercury);
+  border-radius: var(--radius);
+  padding: 0.8rem 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+/* ---------- Results ---------- */
+.results { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.result {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  animation: rise 0.4s var(--ease) both;
+}
+
+.resultHead { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.resultName { font-size: 0.88rem; }
+
+.downloadBtn {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.1s var(--ease);
+}
+
+.downloadBtn:hover { color: var(--text); border-color: var(--mercury); }
+.downloadBtn:active { transform: scale(0.96); }
+
+.result audio { width: 100%; height: 32px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .unit, .metaCard, .status, .result, .stepper { animation: none; }
+  /* Ring stops spinning; the elapsed clock still ticks, so liveness is preserved. */
+  .spinner { animation: none; }
+  .step { transition: none; }
+  .switchKnob { transition: none; }
+}
+
+@media (max-width: 768px) {
+  .pitchTop { align-items: flex-start; }
+}

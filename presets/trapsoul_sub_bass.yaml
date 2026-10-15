@@ -1,0 +1,12 @@
+name: trapsoul_sub_bass
+target_stem: bass
+description: >
+  Warm, saturated sub-bass — add odd harmonics for presence on small speakers,
+  then hard LPF at 120 Hz to keep the low end clean and focused.
+chain:
+  - op: saturate
+    params:
+      drive_db: 8.0
+  - op: eq
+    params:
+      lpf: 120
